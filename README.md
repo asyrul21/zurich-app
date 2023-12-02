@@ -1,24 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Zurich App
 
-## Getting Started
+## Pre Requisites
 
-First, run the development server:
+Node Version: 18.16.1
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NPM version: 9.5.1
+
+## Setup
+
+1. npm install
+
+2. Populate your `.env`
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+`npm run dev`
+
+## Testing
+
+Unit Test for Components: `npm run test:components`
+
+Unit Test for Pages: `npm run test:pages`
+
+Unit Test for both: `npm run test:all`
 
 ## Learn More
 

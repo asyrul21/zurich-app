@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "test:components": "jest --testMatch \"**/components/**/*.test.(ts|tsx)\"",
+    "test:pages": "jest --testMatch \"**/app/**/*.test.(ts|tsx)\"",
+    "test:all": "npm run test:components && npm run test:pages",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
