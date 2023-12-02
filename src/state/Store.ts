@@ -5,14 +5,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // reducers
 import { authLoginReducer, authRegisterReducer } from "./auth/reducers";
 import {
-  createSingleItemReducer,
-  deleteSingleItemReducer,
-  getItemsReducer,
-  getSingleItemReducer,
-  updateSingleItemReducer,
-} from "./items/reducers";
-
-// import rootReducer from "./reducers";
+  createSingleUserReducer,
+  deleteSingleUserReducer,
+  getSingleUserReducer,
+  getUsersReducer,
+  updateSingleUserReducer,
+} from "./users/reducers";
 
 // middleware
 const middlewares = [thunk];
@@ -22,17 +20,15 @@ const combinedReducer = combineReducers({
   authLogin: authLoginReducer,
   authRegister: authRegisterReducer,
   // products
-  getItems: getItemsReducer,
-  getSingleItem: getSingleItemReducer,
-  createItem: createSingleItemReducer,
-  updateItem: updateSingleItemReducer,
-  deleteItem: deleteSingleItemReducer,
+  getUsers: getUsersReducer,
+  getSingleUser: getSingleUserReducer,
+  createUser: createSingleUserReducer,
+  updateUser: updateSingleUserReducer,
+  deleteUser: deleteSingleUserReducer,
 });
 
-// initial states here
 const initalState = {};
 
-// creating store
 export const store = createStore(
   combinedReducer,
   initalState,

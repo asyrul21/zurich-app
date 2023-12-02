@@ -1,61 +1,61 @@
 import {
-  GET_ITEMS_REQUEST,
-  GET_ITEMS_SUCCESS,
-  GET_ITEMS_FAIL,
-  GET_ITEMS_RESET,
-  GET_SINGLE_ITEM_REQUEST,
-  GET_SINGLE_ITEM_SUCCESS,
-  GET_SINGLE_ITEM_FAIL,
-  GET_SINGLE_ITEM_RESET,
-  UPDATE_ITEM_REQUEST,
-  UPDATE_ITEM_SUCCESS,
-  UPDATE_ITEM_FAIL,
-  UPDATE_ITEM_RESET,
-  CREATE_ITEM_REQUEST,
-  CREATE_ITEM_SUCCESS,
-  CREATE_ITEM_FAIL,
-  CREATE_ITEM_RESET,
-  DELETE_ITEM_REQUEST,
-  DELETE_ITEM_SUCCESS,
-  DELETE_ITEM_FAIL,
-  DELETE_ITEM_RESET,
-} from './constants';
+  CREATE_USER_FAIL,
+  CREATE_USER_REQUEST,
+  CREATE_USER_RESET,
+  CREATE_USER_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_RESET,
+  DELETE_USER_SUCCESS,
+  GET_SINGLE_USER_FAIL,
+  GET_SINGLE_USER_REQUEST,
+  GET_SINGLE_USER_RESET,
+  GET_SINGLE_USER_SUCCESS,
+  GET_USERS_FAIL,
+  GET_USERS_REQUEST,
+  GET_USERS_RESET,
+  GET_USERS_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_RESET,
+  UPDATE_USER_SUCCESS,
+} from "./constants";
 
-const getItemsInitialState = {
+const getUsersInitialState = {
   loading: false,
   error: null,
-  items: null,
+  users: null,
   pages: null,
   page: 1,
 };
-const getItemsReducer = (state = getItemsInitialState, action: any) => {
+const getUsersReducer = (state = getUsersInitialState, action: any) => {
   switch (action.type) {
-    case GET_ITEMS_REQUEST:
+    case GET_USERS_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case GET_ITEMS_SUCCESS:
+    case GET_USERS_SUCCESS:
       return {
         error: null,
         loading: false,
-        items: action.payload.items,
+        users: action.payload.users,
         pages: action.payload.pages,
         page: action.payload.page,
       };
-    case GET_ITEMS_FAIL:
+    case GET_USERS_FAIL:
       return {
         error: action.payload,
         loading: false,
-        items: null,
+        users: null,
         pages: null,
         page: 1,
       };
-    case GET_ITEMS_RESET:
+    case GET_USERS_RESET:
       return {
         loading: false,
         error: null,
-        items: null,
+        users: null,
         pages: null,
         page: 1,
       };
@@ -64,72 +64,72 @@ const getItemsReducer = (state = getItemsInitialState, action: any) => {
   }
 };
 
-const getSingleItemInitialState = {
+const getSingleUserInitialState = {
   loading: false,
   error: null,
-  item: null,
+  user: null,
 };
-const getSingleItemReducer = (
-  state = getSingleItemInitialState,
+const getSingleUserReducer = (
+  state = getSingleUserInitialState,
   action: any,
 ) => {
   switch (action.type) {
-    case GET_SINGLE_ITEM_REQUEST:
+    case GET_SINGLE_USER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case GET_SINGLE_ITEM_SUCCESS:
+    case GET_SINGLE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
-        item: action.payload.item,
+        user: action.payload.user,
       };
-    case GET_SINGLE_ITEM_FAIL:
+    case GET_SINGLE_USER_FAIL:
       return {
         loading: false,
         error: action.payload,
-        item: null,
+        user: null,
       };
-    case GET_SINGLE_ITEM_RESET:
+    case GET_SINGLE_USER_RESET:
       return {
         loading: false,
         error: null,
-        item: null,
+        user: null,
       };
     default:
       return state;
   }
 };
 
-const updateSingleItemInitialState = {
+const updateSingleUserInitialState = {
   loading: false,
   error: null,
   success: null,
 };
-const updateSingleItemReducer = (
-  state = updateSingleItemInitialState,
+const updateSingleUserReducer = (
+  state = updateSingleUserInitialState,
   action: any,
 ) => {
   switch (action.type) {
-    case UPDATE_ITEM_REQUEST:
+    case UPDATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case UPDATE_ITEM_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
       };
-    case UPDATE_ITEM_FAIL:
+    case UPDATE_USER_FAIL:
       return {
         loading: false,
         error: action.payload,
         success: false,
       };
-    case UPDATE_ITEM_RESET:
+    case UPDATE_USER_RESET:
       return {
         loading: false,
         error: null,
@@ -140,34 +140,34 @@ const updateSingleItemReducer = (
   }
 };
 
-const createSingleItemInitialState = {
+const createSingleUserInitialState = {
   loading: false,
   error: null,
   success: null,
 };
-const createSingleItemReducer = (
-  state = createSingleItemInitialState,
+const createSingleUserReducer = (
+  state = createSingleUserInitialState,
   action: any,
 ) => {
   switch (action.type) {
-    case CREATE_ITEM_REQUEST:
+    case CREATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case CREATE_ITEM_SUCCESS:
+    case CREATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
       };
-    case CREATE_ITEM_FAIL:
+    case CREATE_USER_FAIL:
       return {
         loading: false,
         error: action.payload,
         success: false,
       };
-    case CREATE_ITEM_RESET:
+    case CREATE_USER_RESET:
       return {
         loading: false,
         error: null,
@@ -178,34 +178,34 @@ const createSingleItemReducer = (
   }
 };
 
-const deleteSingleItemInitialState = {
+const deleteSingleUserInitialState = {
   loading: false,
   error: null,
   success: null,
 };
-const deleteSingleItemReducer = (
-  state = deleteSingleItemInitialState,
+const deleteSingleUserReducer = (
+  state = deleteSingleUserInitialState,
   action: any,
 ) => {
   switch (action.type) {
-    case DELETE_ITEM_REQUEST:
+    case DELETE_USER_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case DELETE_ITEM_SUCCESS:
+    case DELETE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
       };
-    case DELETE_ITEM_FAIL:
+    case DELETE_USER_FAIL:
       return {
         loading: false,
         error: action.payload,
         success: false,
       };
-    case DELETE_ITEM_RESET:
+    case DELETE_USER_RESET:
       return {
         loading: false,
         error: null,
@@ -217,9 +217,9 @@ const deleteSingleItemReducer = (
 };
 
 export {
-  getItemsReducer,
-  getSingleItemReducer,
-  updateSingleItemReducer,
-  createSingleItemReducer,
-  deleteSingleItemReducer,
+  getUsersReducer,
+  getSingleUserReducer,
+  createSingleUserReducer,
+  updateSingleUserReducer,
+  deleteSingleUserReducer,
 };
