@@ -3,28 +3,17 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 // reducers
-import { authLoginReducer, authRegisterReducer } from "./auth/reducers";
-import {
-  createSingleUserReducer,
-  deleteSingleUserReducer,
-  getSingleUserReducer,
-  getUsersReducer,
-  updateSingleUserReducer,
-} from "./users/reducers";
+import { authLoginReducer } from "./auth/reducers";
+import { getUsersReducer } from "./users/reducers";
 
 // middleware
 const middlewares = [thunk];
 
 const combinedReducer = combineReducers({
-  //auth
+  // auth
   authLogin: authLoginReducer,
-  authRegister: authRegisterReducer,
-  // products
+  // users
   getUsers: getUsersReducer,
-  getSingleUser: getSingleUserReducer,
-  createUser: createSingleUserReducer,
-  updateUser: updateSingleUserReducer,
-  deleteUser: deleteSingleUserReducer,
 });
 
 const initalState = {};

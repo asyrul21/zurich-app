@@ -13,7 +13,7 @@ const convertObjectToURLParams = (object: any) => {
 
 const buildJsonHeaderConfig = (token = null) => {
   let headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   } as any;
 
   if (token) {
@@ -29,26 +29,4 @@ const buildJsonHeaderConfig = (token = null) => {
   return config;
 };
 
-const buildMultipartFormDataHeaderConfig = (token = null) => {
-  let headers = {
-    'Content-Type': 'multipart/form-data',
-  } as any;
-
-  if (token) {
-    headers = {
-      ...headers,
-      Authorization: `Bearer ${token}`,
-    };
-  }
-  const config = {
-    headers: { ...headers },
-  };
-  return config;
-};
-
-export {
-  extractErrorMessage,
-  buildJsonHeaderConfig,
-  convertObjectToURLParams,
-  buildMultipartFormDataHeaderConfig,
-};
+export { extractErrorMessage, buildJsonHeaderConfig, convertObjectToURLParams };
