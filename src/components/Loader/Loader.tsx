@@ -1,20 +1,19 @@
-import React from 'react';
+import React from "react";
 
-const Loader = () => {
+export const Loader = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        minHeight: 'inherit',
-        height: 'inherit',
-        paddingTop: '52px',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        minHeight: "inherit",
+        height: "inherit",
+        paddingTop: "52px",
       }}
+      data-testid="loader-root"
     >
       <p>Loading...</p>
     </div>
   );
 };
-
-export default Loader;

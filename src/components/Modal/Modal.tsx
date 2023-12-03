@@ -1,7 +1,7 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from "react";
+import classnames from "classnames";
 
-import './Modal.scss';
+import "./Modal.scss";
 
 interface IModalProps {
   children: React.ReactNode;
@@ -12,12 +12,12 @@ interface IModalProps {
 }
 
 // parent of this container needs to be position-relative
-const Modal = ({
+export const Modal = ({
   children,
   onClose,
   isOpen = false,
   layer = 1,
-  title = 'Poppup',
+  title = "Poppup",
 }: IModalProps) => {
   const innerClasses = classnames({
     Modal_inner_container: true,
@@ -36,15 +36,19 @@ const Modal = ({
       style={{
         zIndex: computedZIndex,
       }}
+      data-testid="modal-root"
     >
       <div
-        className={'Modal_container'}
+        className={"Modal_container"}
         style={{
           zIndex: computedZIndex + 1,
         }}
       >
         <div className="Modal_heading">
-          <span style={{ fontWeight: 'bold', marginRight: '25px' }}>
+          <span
+            style={{ fontWeight: "bold", marginRight: "25px" }}
+            data-testid="modal-title"
+          >
             {title}
           </span>
           <div className={closeButtonClasses} onClick={onClose} role="button">
@@ -56,5 +60,3 @@ const Modal = ({
     </div>
   );
 };
-
-export default Modal;
