@@ -9,7 +9,7 @@ export const Loader = () => {
         alignItems: "flex-start",
         minHeight: "inherit",
         height: "inherit",
-        paddingTop: "52px",
+        padding: "52px 0",
       }}
       data-testid="loader-root"
     >

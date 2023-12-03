@@ -11,40 +11,43 @@ import {
   GET_USERS_RESET,
 } from "./constants";
 
-export const getUsers =
-  (
-    /**
-     * Filter params
-     */
-    params = {
-      keyword: null,
-    },
-  ) =>
-  async (dispatch: any) => {
-    const { keyword } = params;
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    const paramsString = convertObjectToURLParams({
-      keyword,
+export interface IGetUsersParams {
+  page: number;
+  per_page: number;
+}
+
+const DefaultParams: IGetUsersParams = {
+  page: 1,
+  per_page: 6,
+};
+
+export const getUsers = (params?: IGetUsersParams) => async (dispatch: any) => {
+  const queryParams: IGetUsersParams = { ...DefaultParams, ...(params || {}) };
+
+  const paramsString = convertObjectToURLParams({
+    ...queryParams,
+  });
+
+  try {
+    dispatch({
+      type: GET_USERS_REQUEST,
     });
-
-    try {
-      dispatch({
-        type: GET_USERS_REQUEST,
-      });
-      const { data } = await axios.get(`/api/items?${paramsString}`);
-      dispatch({
-        type: GET_USERS_SUCCESS,
-        payload: {
-          users: data,
-        },
-      });
-    } catch (error) {
-      dispatch({
-        type: GET_USERS_FAIL,
-        payload: extractErrorMessage(error),
-      });
-    }
-  };
+    const { data } = await axios.get(`${BASE_URL}/users?${paramsString}`);
+    dispatch({
+      type: GET_USERS_SUCCESS,
+      payload: {
+        users: data.data,
+      },
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USERS_FAIL,
+      payload: extractErrorMessage(error),
+    });
+  }
+};
 export const resetGetUsersReducer = () => async (dispatch: any) => {
   dispatch({
     type: GET_USERS_RESET,

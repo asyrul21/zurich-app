@@ -36,6 +36,14 @@ const Header = () => {
           >
             About
           </Link>
+          <Link
+            className={classnames(navItemClasses, {
+              container_navbar_link_active: pathname === "/users",
+            })}
+            href="/users"
+          >
+            Users
+          </Link>
         </div>
         <div className="navbar_right">
           <Link

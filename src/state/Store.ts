@@ -23,3 +23,6 @@ export const store = createStore(
   initalState,
   composeWithDevTools(applyMiddleware(...middlewares)),
 );
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

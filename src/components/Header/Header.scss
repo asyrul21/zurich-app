@@ -35,7 +35,12 @@ $navbar_height: 54px;
 
 .nav_title {
   font-size: 18px;
+  color: #233142;
   margin-right: 24px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .navbar_right {
@@ -70,6 +75,7 @@ $navbar_height: 54px;
     opacity: 1;
     background-color: #f95959;
     color: white;
+    text-decoration: none;
   }
 }
 

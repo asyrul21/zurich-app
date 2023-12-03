@@ -8,6 +8,7 @@ export const ErrorComponent = ({ error }: { error?: string }) => {
         minHeight: "inherit",
         width: "100%",
         textAlign: "center",
+        padding: "20px",
       }}
       data-testid="error-root"
     >
