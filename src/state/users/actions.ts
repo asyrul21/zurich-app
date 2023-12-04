@@ -39,6 +39,8 @@ export const getUsers = (params?: IGetUsersParams) => async (dispatch: any) => {
       type: GET_USERS_SUCCESS,
       payload: {
         users: data.data,
+        pages: data.total_pages,
+        total: data.total,
       },
     });
   } catch (error) {

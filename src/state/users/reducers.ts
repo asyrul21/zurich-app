@@ -11,6 +11,7 @@ const getUsersInitialState = {
   users: null,
   pages: null,
   page: 1,
+  total: null,
 };
 export const getUsersReducer = (state = getUsersInitialState, action: any) => {
   switch (action.type) {
@@ -25,6 +26,7 @@ export const getUsersReducer = (state = getUsersInitialState, action: any) => {
         loading: false,
         users: action.payload.users,
         pages: action.payload.pages,
+        total: action.payload.total,
         page: action.payload.page,
       };
     case GET_USERS_FAIL:
@@ -33,6 +35,7 @@ export const getUsersReducer = (state = getUsersInitialState, action: any) => {
         loading: false,
         users: null,
         pages: null,
+        total: null,
         page: 1,
       };
     case GET_USERS_RESET:
@@ -41,6 +44,7 @@ export const getUsersReducer = (state = getUsersInitialState, action: any) => {
         error: null,
         users: null,
         pages: null,
+        total: null,
         page: 1,
       };
     default:

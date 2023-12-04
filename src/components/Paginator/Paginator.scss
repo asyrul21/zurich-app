@@ -1,0 +1,31 @@
+.paginator_container {
+  //   border: 2px solid red;
+}
+
+.paginator_label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.paginator_btn {
+  font-size: 14px;
+  width: 40px;
+  height: 32px;
+  color: white;
+  background: #35495e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #347474;
+  }
+}
+
+.paginator_prev {
+  margin-right: 10px;
+}
+
+.paginator_next {
+  margin-left: 10px;
+}

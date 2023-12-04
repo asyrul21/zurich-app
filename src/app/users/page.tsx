@@ -5,11 +5,12 @@ import PageTitle from "@/components/Page-Title/PageTitle";
 import { ErrorComponent } from "@/components/Error/Error";
 import { Loader } from "@/components/Loader/Loader";
 import { getUsers } from "@/state/users/actions";
+import Paginator from "@/components/Paginator/Paginator";
 
 export default function Users() {
   const dispatch = useAppDispatch();
   const getUsersReducer = useAppSelector((state: any) => state.getUsers);
-  const { loading, error, users, pages } = getUsersReducer;
+  const { loading, error, users, pages, total } = getUsersReducer;
 
   const [perPage, setPerPage] = useState(6);
   const [page, setPage] = useState(1);
@@ -40,10 +41,22 @@ export default function Users() {
               id="per_page_filter"
               type="number"
               value={String(perPage)}
-              onChange={(e) => setPerPage(Number(e.target.value))}
+              onChange={(e) => {
+                setPage(1);
+                setPerPage(Number(e.target.value));
+              }}
             />
           </div>
         </div>
+      </div>
+      <div className="app_flex">
+        {pages > 1 && (
+          <Paginator
+            currentPage={page}
+            onChange={(v) => setPage(v)}
+            totalPages={pages}
+          />
+        )}
       </div>
       <div className="page_list_container">
         {error ? (
