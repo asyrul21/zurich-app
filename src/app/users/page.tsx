@@ -14,6 +14,9 @@ export default function Users() {
 
   const [perPage, setPerPage] = useState(6);
   const [page, setPage] = useState(1);
+  const [firstNameStartsFilter, setFirstNameStartsFilter] = useState("G");
+  const [lastNameStartsFilter, setLastNameStartsFilter] = useState("W");
+  const [showEmail, setShowEmail] = useState(false);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -23,9 +26,58 @@ export default function Users() {
     dispatch(getUsers({ page, per_page: perPage }));
   }, [page, perPage]);
 
-  // const error = "yo";
-  // const loading = true;
-  // const items = [{ name: "john" }];
+  // george.bluth@reqres.in
+  const maskEmail = (userEmail: string) => {
+    const left = userEmail.split("@")[0];
+    const right = userEmail.split("@")[1];
+
+    let res = "";
+    for (let i = 0; i < left.length; i++) {
+      res += "*";
+    }
+    res += "@";
+    const provider = right.split(".")[0];
+    for (let i = 0; i < provider.length; i++) {
+      res += "*";
+    }
+    res += ".";
+    const domain = right.split(".")[1];
+    for (let i = 0; i < domain.length; i++) {
+      res += "*";
+    }
+    return res;
+  };
+
+  const filteredUsers = users?.filter((u: any) => {
+    /* both filter is empty */
+    if (firstNameStartsFilter === "" && lastNameStartsFilter === "") {
+      return true;
+    } else if (firstNameStartsFilter !== "" && lastNameStartsFilter === "") {
+      /* last name filter is empty */
+      const fn_filterLength = firstNameStartsFilter.length;
+      return (
+        u.first_name.toLowerCase().slice(0, fn_filterLength) ===
+        firstNameStartsFilter.toLowerCase()
+      );
+    } else if (firstNameStartsFilter === "" && lastNameStartsFilter !== "") {
+      /* first filter is empty */
+      const ln_filterLength = lastNameStartsFilter.length;
+      return (
+        u.last_name.toLowerCase().slice(0, ln_filterLength) ===
+        lastNameStartsFilter.toLowerCase()
+      );
+    } else if (firstNameStartsFilter !== "" && lastNameStartsFilter !== "") {
+      /* both filter is filled */
+      const fn_filterLength = firstNameStartsFilter.length;
+      const ln_filterLength = lastNameStartsFilter.length;
+      return (
+        u.first_name.toLowerCase().slice(0, fn_filterLength) ===
+          firstNameStartsFilter.toLowerCase() ||
+        u.last_name.toLowerCase().slice(0, ln_filterLength) ===
+          lastNameStartsFilter.toLowerCase()
+      );
+    }
+  });
   return (
     <div className="app_page">
       <PageTitle>Users</PageTitle>
@@ -48,23 +100,65 @@ export default function Users() {
             />
           </div>
         </div>
+        <h3 className="app_sub_heading">OR Filter</h3>
+        <div className="input_group">
+          <label className="input_label" htmlFor="first_name_filter">
+            First Name starts with
+          </label>
+          <div className="input_container">
+            <input
+              className="input_input"
+              id="first_name_filter"
+              type="text"
+              value={firstNameStartsFilter}
+              onChange={(e) => {
+                setFirstNameStartsFilter(e.target.value);
+              }}
+            />
+          </div>
+        </div>
+        <div className="input_group">
+          <label className="input_label" htmlFor="per_page_filter">
+            Last Name starts with
+          </label>
+          <div className="input_container">
+            <input
+              className="input_input"
+              id="per_page_filter"
+              type="text"
+              value={lastNameStartsFilter}
+              onChange={(e) => {
+                setLastNameStartsFilter(e.target.value);
+              }}
+            />
+          </div>
+        </div>
       </div>
-      <div className="app_flex">
-        {pages > 1 && (
+      {users && users.length > 0 && (
+        <div className="app_flex">
+          <button
+            className="app_button"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowEmail(!showEmail);
+            }}
+          >
+            {showEmail ? "Hide" : "Show"} Email
+          </button>
           <Paginator
             currentPage={page}
             onChange={(v) => setPage(v)}
             totalPages={pages}
           />
-        )}
-      </div>
+        </div>
+      )}
       <div className="page_list_container">
         {error ? (
           <ErrorComponent error={error} />
         ) : loading ? (
           <Loader />
-        ) : (
-          users?.map((i: any, idx: number) => {
+        ) : filteredUsers && filteredUsers.length > 0 ? (
+          filteredUsers?.map((i: any, idx: number) => {
             return (
               <div className="page_list_item" key={`item_key_${idx}`}>
                 <div
@@ -92,12 +186,16 @@ export default function Users() {
                   </p>
                   <p className="key_value_group">
                     <span>Email: </span>
-                    <span style={{ fontWeight: "bold" }}>{i.email}</span>
+                    <span style={{ fontWeight: "bold" }}>
+                      {showEmail ? i.email : maskEmail(i.email)}
+                    </span>
                   </p>
                 </div>
               </div>
             );
           })
+        ) : (
+          <p>No records found on this page.</p>
         )}
       </div>
     </div>
