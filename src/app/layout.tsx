@@ -1,10 +1,13 @@
 import clasnames from "classnames";
 import type { Metadata } from "next";
+
+import SessionProvider from "@/context/Session/SessionProvider";
+import ReduxProvider from "@/state/ReduxProvider";
 import { Inter } from "next/font/google";
+
 import "./App.scss";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import ReduxProvider from "@/state/ReduxProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,11 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} style={{ background: "white" }}>
-        <ReduxProvider>
-          <Header />
-          <main className={mainClasses}>{children}</main>
-          <Footer />
-        </ReduxProvider>
+        <SessionProvider>
+          <ReduxProvider>
+            <Header />
+            <main className={mainClasses}>{children}</main>
+            <Footer />
+          </ReduxProvider>
+        </SessionProvider>
       </body>
     </html>
   );

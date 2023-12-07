@@ -6,9 +6,14 @@ import { ErrorComponent } from "@/components/Error/Error";
 import { Loader } from "@/components/Loader/Loader";
 import { getUsers } from "@/state/users/actions";
 import Paginator from "@/components/Paginator/Paginator";
+import useAuthGuard from "@/hooks/useAuthGuard";
+// import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function Users() {
   const dispatch = useAppDispatch();
+  useAuthGuard();
+  // const { currentUser } = useCurrentUser();
+
   const getUsersReducer = useAppSelector((state: any) => state.getUsers);
   const { loading, error, users, pages, total } = getUsersReducer;
 
@@ -78,6 +83,7 @@ export default function Users() {
       );
     }
   });
+
   return (
     <div className="app_page">
       <PageTitle>Users</PageTitle>
