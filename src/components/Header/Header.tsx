@@ -27,6 +27,8 @@ const Header = () => {
   };
 
   // console.log("pathname:", pathname);
+  // console.log("current user:", currentUser);
+
   return (
     <header className="app_header" data-testid="header-root">
       <nav className={containerClasses}>
