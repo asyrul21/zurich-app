@@ -13,7 +13,7 @@ NPM version: 9.5.1
 2. Populate your `.env`
 
 ```
-NEXT_PUBLIC_API_BASE_URL=https://reqres.in/api
+API_BASE_URL=https://reqres.in/api
 
 NEXT_PUBLIC_SECRET=
 NEXTAUTH_SECRET=

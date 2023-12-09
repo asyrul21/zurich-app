@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  buildJsonHeaderConfig,
-  convertObjectToURLParams,
-  extractErrorMessage,
-} from "../utils";
+import { convertObjectToURLParams, extractErrorMessage } from "../utils";
 import {
   GET_USERS_REQUEST,
   GET_USERS_SUCCESS,
@@ -11,21 +7,20 @@ import {
   GET_USERS_RESET,
 } from "./constants";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 export interface IGetUsersParams {
   page: number;
   per_page: number;
+  maskEmail: boolean;
 }
 
 const DefaultParams: IGetUsersParams = {
   page: 1,
   per_page: 6,
+  maskEmail: false,
 };
 
 export const getUsers = (params?: IGetUsersParams) => async (dispatch: any) => {
   const queryParams: IGetUsersParams = { ...DefaultParams, ...(params || {}) };
-
   const paramsString = convertObjectToURLParams({
     ...queryParams,
   });
@@ -34,7 +29,8 @@ export const getUsers = (params?: IGetUsersParams) => async (dispatch: any) => {
     dispatch({
       type: GET_USERS_REQUEST,
     });
-    const { data } = await axios.get(`${BASE_URL}/users?${paramsString}`);
+
+    const { data } = await axios.get(`/api/users?${paramsString}`);
     dispatch({
       type: GET_USERS_SUCCESS,
       payload: {

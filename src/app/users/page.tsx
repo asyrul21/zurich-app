@@ -24,34 +24,8 @@ export default function Users() {
   const [showEmail, setShowEmail] = useState(false);
 
   useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
-  useEffect(() => {
-    dispatch(getUsers({ page, per_page: perPage }));
-  }, [page, perPage]);
-
-  // george.bluth@reqres.in
-  const maskEmail = (userEmail: string) => {
-    const left = userEmail.split("@")[0];
-    const right = userEmail.split("@")[1];
-
-    let res = "";
-    for (let i = 0; i < left.length; i++) {
-      res += "*";
-    }
-    res += "@";
-    const provider = right.split(".")[0];
-    for (let i = 0; i < provider.length; i++) {
-      res += "*";
-    }
-    res += ".";
-    const domain = right.split(".")[1];
-    for (let i = 0; i < domain.length; i++) {
-      res += "*";
-    }
-    return res;
-  };
+    dispatch(getUsers({ page, per_page: perPage, maskEmail: !showEmail }));
+  }, [page, perPage, showEmail]);
 
   const filteredUsers = users?.filter((u: any) => {
     /* both filter is empty */
@@ -192,9 +166,7 @@ export default function Users() {
                   </p>
                   <p className="key_value_group">
                     <span>Email: </span>
-                    <span style={{ fontWeight: "bold" }}>
-                      {showEmail ? i.email : maskEmail(i.email)}
-                    </span>
+                    <span style={{ fontWeight: "bold" }}>{i.email}</span>
                   </p>
                 </div>
               </div>
