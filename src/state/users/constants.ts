@@ -1,5 +1,11 @@
-// public
-export const GET_USERS_REQUEST = "GET_USERS_REQUEST";
-export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";
-export const GET_USERS_FAIL = "GET_USERS_FAIL";
-export const GET_USERS_RESET = "GET_USERS_RESET";
+export interface IGetUsersParams {
+  page: number;
+  per_page: number;
+  maskEmail: boolean;
+}
+
+export const GetUsersDefaultParams: IGetUsersParams = {
+  page: 1,
+  per_page: 6,
+  maskEmail: false,
+};

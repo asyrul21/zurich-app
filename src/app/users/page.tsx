@@ -1,21 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
+import type { RootState } from "../../state/Store";
 import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import PageTitle from "@/components/Page-Title/PageTitle";
 import { ErrorComponent } from "@/components/Error/Error";
 import { Loader } from "@/components/Loader/Loader";
-import { getUsers } from "@/state/users/actions";
+import { getUsers } from "@/state/users/slice";
 import Paginator from "@/components/Paginator/Paginator";
 import useAuthGuard from "@/hooks/useAuthGuard";
-// import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function Users() {
   const dispatch = useAppDispatch();
   useAuthGuard();
-  // const { currentUser } = useCurrentUser();
 
-  const getUsersReducer = useAppSelector((state: any) => state.getUsers);
-  const { loading, error, users, pages, total } = getUsersReducer;
+  const UsersReducer = useAppSelector((state: RootState) => state.Users);
+  const { loading, error, users, pages, total } = UsersReducer;
 
   const [perPage, setPerPage] = useState(6);
   const [page, setPage] = useState(1);
@@ -128,7 +127,7 @@ export default function Users() {
           <Paginator
             currentPage={page}
             onChange={(v) => setPage(v)}
-            totalPages={pages}
+            totalPages={pages || 0}
           />
         </div>
       )}

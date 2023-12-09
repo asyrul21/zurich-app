@@ -1,28 +1,15 @@
-import { createStore, combineReducers, applyMiddleware, Store } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+// import { createStore, combineReducers, applyMiddleware, Store } from "redux";
+
+import { configureStore } from "@reduxjs/toolkit";
 
 // reducers
-import { authLoginReducer } from "./auth/reducers";
-import { getUsersReducer } from "./users/reducers";
+import UsersReducers from "./users/slice";
 
-// middleware
-const middlewares = [thunk];
-
-const combinedReducer = combineReducers({
-  // auth
-  authLogin: authLoginReducer,
-  // users
-  getUsers: getUsersReducer,
+export const store = configureStore({
+  reducer: {
+    Users: UsersReducers,
+  },
 });
-
-const initalState = {};
-
-export const store = createStore(
-  combinedReducer,
-  initalState,
-  composeWithDevTools(applyMiddleware(...middlewares)),
-);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
