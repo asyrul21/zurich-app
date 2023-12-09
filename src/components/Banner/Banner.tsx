@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import classnames from 'classnames';
+import React, { useState } from "react";
+import classnames from "classnames";
 
-// styles
-import './Banner.scss';
+import "./Banner.scss";
 
 export interface IBannerProps {
-  type: 'info' | 'warning' | 'error' | 'success';
+  type: "info" | "warning" | "error" | "success";
   text: string;
 }
 
-export const Banner = ({ type = 'info', text }: IBannerProps) => {
+export const Banner = ({ type = "info", text }: IBannerProps) => {
   const [show, setShow] = useState<boolean>(true);
 
   const containerStyles = classnames({

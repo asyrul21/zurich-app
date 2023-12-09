@@ -1,5 +1,3 @@
-// import { createStore, combineReducers, applyMiddleware, Store } from "redux";
-
 import { configureStore } from "@reduxjs/toolkit";
 
 // reducers
