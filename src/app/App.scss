@@ -215,3 +215,9 @@ a {
   }
   transition: background-color 0.2s;
 }
+
+.page_list_item_user {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}

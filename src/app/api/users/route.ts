@@ -1,39 +1,44 @@
-import { maskResultDataEmail } from "@/app/utils";
-import { convertObjectToURLParams } from "@/state/utils";
+import { maskEmailString } from "@/app/utils";
 
 const BASE_URL = process.env.API_BASE_URL;
 
-const defaultApiParams = {
-  maskEmail: false,
-  page: 1,
-  per_page: 6,
-};
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const maskEmailParam = searchParams.get("maskEmail") || "false";
-  const maskEmail = maskEmailParam === "true" ? true : false;
-
-  const page = searchParams.get("page");
-  const per_page = searchParams.get("per_page");
-
-  const queryParams = {
-    ...defaultApiParams,
-    page,
-    per_page,
-  };
-
-  const paramsString = convertObjectToURLParams({
-    ...queryParams,
-  });
+  const maskEmailParamStr =
+    searchParams.get("showEmailsFor") || JSON.stringify([]);
+  const showEmailsFor = JSON.parse(maskEmailParamStr);
 
   try {
-    const response = await fetch(`${BASE_URL}/users?${paramsString}`);
+    // get total document ocunt
+    const initResponse = await fetch(`${BASE_URL}/users`);
+    const initResult = await initResponse.json();
+    const total = initResult.total;
+
+    const response = await fetch(`${BASE_URL}/users?per_page=${total}`);
     const result = await response.json();
+
+    let resultData = result.data;
+    resultData = resultData.filter((d: any) => {
+      const firstCharFirstName = d.first_name.split("")[0];
+      const firstCharLastName = d.last_name.split("")[0];
+      return (
+        firstCharFirstName.toLowerCase() === "g" ||
+        firstCharLastName.toLowerCase() === "w"
+      );
+    });
+
+    resultData = resultData.map((d: any) => {
+      return {
+        ...d,
+        email: showEmailsFor.includes(d.id)
+          ? d.email
+          : maskEmailString(d.email),
+      };
+    });
 
     const returnObj = {
       ...result,
-      data: maskEmail ? maskResultDataEmail(result.data) : result.data,
+      data: resultData,
     };
 
     return Response.json(returnObj);

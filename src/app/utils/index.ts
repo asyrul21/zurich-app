@@ -1,4 +1,4 @@
-const maskEmailString = (userEmail: string) => {
+export const maskEmailString = (userEmail: string) => {
   const left = userEmail.split("@")[0];
   const right = userEmail.split("@")[1];
 
@@ -17,13 +17,4 @@ const maskEmailString = (userEmail: string) => {
     res += "*";
   }
   return res;
-};
-
-export const maskResultDataEmail = (data: any) => {
-  return data.map((d: any) => {
-    return {
-      ...d,
-      email: maskEmailString(d.email),
-    };
-  });
 };
