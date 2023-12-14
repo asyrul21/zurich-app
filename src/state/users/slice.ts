@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createSliceWithThunks } from "../CustomCreateSlice";
-import { IGetUsersParams, GetUsersDefaultParams } from "./constants";
 import { convertObjectToURLParams, extractErrorMessage } from "../utils";
 
 interface IUsersState {

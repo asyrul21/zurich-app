@@ -11,22 +11,4 @@ const convertObjectToURLParams = (object: any) => {
   return new URLSearchParams(object).toString();
 };
 
-const buildJsonHeaderConfig = (token = null) => {
-  let headers = {
-    "Content-Type": "application/json",
-  } as any;
-
-  if (token) {
-    headers = {
-      ...headers,
-      Authorization: `Bearer ${token}`,
-    };
-  }
-
-  const config = {
-    headers: { ...headers },
-  };
-  return config;
-};
-
-export { extractErrorMessage, buildJsonHeaderConfig, convertObjectToURLParams };
+export { extractErrorMessage, convertObjectToURLParams };

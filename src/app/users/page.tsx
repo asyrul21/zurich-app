@@ -6,7 +6,6 @@ import PageTitle from "@/components/Page-Title/PageTitle";
 import { ErrorComponent } from "@/components/Error/Error";
 import { Loader } from "@/components/Loader/Loader";
 import { getUsers } from "@/state/users/slice";
-import Paginator from "@/components/Paginator/Paginator";
 import useAuthGuard from "@/hooks/useAuthGuard";
 
 export default function Users() {
