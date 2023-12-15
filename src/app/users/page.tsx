@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import PageTitle from "@/components/Page-Title/PageTitle";
 import { ErrorComponent } from "@/components/Error/Error";
 import { Loader } from "@/components/Loader/Loader";
-import { getUsers } from "@/state/users/slice";
+import { getUsers, toggleShowEmailByUserId } from "@/state/users/slice";
 import useAuthGuard from "@/hooks/useAuthGuard";
 
 export default function Users() {
@@ -15,20 +15,12 @@ export default function Users() {
   const UsersReducer = useAppSelector((state: RootState) => state.Users);
   const { loading, error, users } = UsersReducer;
 
-  const [showEmailsFor, setShowEmailsFor] = useState<number[]>([]);
-
   useEffect(() => {
-    dispatch(getUsers({ showEmailsFor }));
-  }, [showEmailsFor]);
+    dispatch(getUsers({}));
+  }, []);
 
-  const handleShowEmailsFor = (userId: number) => {
-    if (showEmailsFor.includes(userId)) {
-      const updatedShowEmailsFor = showEmailsFor.filter((id) => id !== userId);
-      setShowEmailsFor(updatedShowEmailsFor);
-    } else {
-      showEmailsFor.push(userId);
-      setShowEmailsFor([...showEmailsFor]);
-    }
+  const handleShowEmailsFor = (userId: number, value: boolean) => {
+    dispatch(toggleShowEmailByUserId({ userId, showEmail: value }));
   };
 
   return (
@@ -81,10 +73,10 @@ export default function Users() {
                   className="app_button"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleShowEmailsFor(i.id);
+                    handleShowEmailsFor(i.id, i.emailMasked);
                   }}
                 >
-                  {showEmailsFor.includes(i.id) ? "Hide" : "Show"} Email
+                  {i.emailMasked ? "Show" : "Hide"} Email
                 </button>
               </div>
             );

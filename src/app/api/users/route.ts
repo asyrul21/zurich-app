@@ -1,6 +1,7 @@
+import { NextResponse } from "next/server";
 import { maskEmailString } from "@/app/utils";
 
-const BASE_URL = process.env.API_BASE_URL;
+export const BASE_URL = process.env.API_BASE_URL;
 
 const recursiveGetUsers: (
   currentPage: number,
@@ -15,11 +16,6 @@ const recursiveGetUsers: (
 };
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const maskEmailParamStr =
-    searchParams.get("showEmailsFor") || JSON.stringify([]);
-  const showEmailsFor = JSON.parse(maskEmailParamStr);
-
   try {
     let resultData = await recursiveGetUsers(1, []);
 
@@ -35,9 +31,8 @@ export async function GET(request: Request) {
     resultData = resultData.map((d: any) => {
       return {
         ...d,
-        email: showEmailsFor.includes(d.id)
-          ? d.email
-          : maskEmailString(d.email),
+        email: maskEmailString(d.email),
+        emailMasked: true,
       };
     });
 
@@ -45,7 +40,7 @@ export async function GET(request: Request) {
       data: resultData,
     };
 
-    return Response.json(returnObj);
+    return NextResponse.json(returnObj);
   } catch (error) {
     console.error("Error in GET Users API:", error);
   }

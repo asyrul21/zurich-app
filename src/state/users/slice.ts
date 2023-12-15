@@ -20,11 +20,7 @@ const UserSlice = createSliceWithThunks({
   reducers: (create) => ({
     getUsers: create.asyncThunk(
       async (params) => {
-        const { showEmailsFor } = params;
-        const paramsString = convertObjectToURLParams({
-          showEmailsFor: JSON.stringify(showEmailsFor),
-        });
-        const { data } = await axios.get(`/api/users?${paramsString}`);
+        const { data } = await axios.get(`/api/users`);
         return {
           users: data.data,
         };
@@ -45,8 +41,40 @@ const UserSlice = createSliceWithThunks({
         },
       },
     ),
+    toggleShowEmailByUserId: create.asyncThunk(
+      async (params) => {
+        const { userId, showEmail } = params;
+        const { data } = await axios.get(
+          `/api/users/toggleShowEmail/${userId}?show=${showEmail}`,
+        );
+        return {
+          updatedUser: data.data,
+        };
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = extractErrorMessage(action.payload ?? action.error);
+        },
+        fulfilled: (state, action) => {
+          const { updatedUser } = action.payload;
+          state.loading = false;
+          state.error = null;
+          state.users =
+            state.users?.map((user: any) => {
+              if (user.id === updatedUser.id) {
+                return { ...updatedUser };
+              }
+              return { ...user };
+            }) || null;
+        },
+      },
+    ),
   }),
 });
 
-export const { getUsers } = UserSlice.actions;
+export const { getUsers, toggleShowEmailByUserId } = UserSlice.actions;
 export default UserSlice.reducer;
